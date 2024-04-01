@@ -33,7 +33,7 @@ function Home() {
                 autoPlay={true}
                 swipeable={true}
                 draggable={true}
-            
+                arrows={isMobile?false:true}
                 infinite={true}
                 partialVisible={false}
 
