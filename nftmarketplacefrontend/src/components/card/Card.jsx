@@ -3,7 +3,7 @@ import "./card.css"
 function Card() {
     return (
         <div>
-            <div class="my-10 w-72 glass p-5 rounded-md shadow-xl mx-20">
+            <div class="my-10 w-72 glass p-5 rounded-md shadow-xl mx-12">
                 <img src="https://miro.medium.com/max/1200/1*qGqMY0LcqT1xgdz0z9r8EA.png" alt="BAYC Ape" />
                 <h2 class="text-md font-bold mt-3 pixfont text-xl">BAYC Ape</h2>
                 <p class="text-gray-400 text-sm mb-2 pixfont text-md">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
