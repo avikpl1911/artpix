@@ -43,7 +43,7 @@ function Profile() {
 
                 <p className='pixfont pt-16 text-5xl pl-5'>Your Assets</p>
                 <div className='pt-12'>
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-scroll">
                         <table className="table">
                             {/* head */}
                             <thead>
@@ -53,10 +53,7 @@ function Profile() {
                                             <input type="checkbox" className="checkbox" />
                                         </label>
                                     </th>
-                                    <th>Name</th>
-                                    <th>Job</th>
-                                    <th>Favorite Color</th>
-                                    <th></th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,12 +77,7 @@ function Profile() {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        Zemlak, Daniel and Leannon
-                                        <br />
-                                        <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
-                                    </td>
-                                    <td>Purple</td>
+                                    
                                     <th>
                                         <button className="btn btn-ghost btn-xs">details</button>
                                     </th>
@@ -110,12 +102,7 @@ function Profile() {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        Carroll Group
-                                        <br />
-                                        <span className="badge badge-ghost badge-sm">Tax Accountant</span>
-                                    </td>
-                                    <td>Red</td>
+                                    
                                     <th>
                                         <button className="btn btn-ghost btn-xs">details</button>
                                     </th>
@@ -140,12 +127,7 @@ function Profile() {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        Rowe-Schoen
-                                        <br />
-                                        <span className="badge badge-ghost badge-sm">Office Assistant I</span>
-                                    </td>
-                                    <td>Crimson</td>
+                                    
                                     <th>
                                         <button className="btn btn-ghost btn-xs">details</button>
                                     </th>
@@ -170,12 +152,7 @@ function Profile() {
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        Wyman-Ledner
-                                        <br />
-                                        <span className="badge badge-ghost badge-sm">Community Outreach Specialist</span>
-                                    </td>
-                                    <td>Indigo</td>
+                                    
                                     <th>
                                         <button className="btn btn-ghost btn-xs">details</button>
                                     </th>
