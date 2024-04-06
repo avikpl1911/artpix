@@ -1,12 +1,44 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react'
+import Details from '../../../components/Details/Details'
 
-function Explore() {
+function Explore(props) {
+
+ 
+    const [currdata,setcurrData] = useState({})
+    const [currasset,setCurrasset] = useState({})
+    const [res,setres] = useState(false)
+    console.log(props.assets)
+    const [detdat,setDetdat] = useState({
+        username:"",
+        listedAssets:[],
+        profileImg:""
+    })
+
+    const processdata =async (asset)=>{
+      const response = await axios.get(`http://localhost:2000/publicuser/${asset.OriginalOwner}`).then(setres(true))
+    //   const res = await axios.get(`http://localhost:2000/islisted/${asset._id}`)
+      console.log(response.data)
+      setDetdat(response.data)
+      setCurrasset(asset)  
+    }
+
+
+
+    const det = useRef(null)
     return (
         <div>
+
+
+
             <div className='z-10'>
                 <div className='w-full glass p-10'>
-                    <img className='mx-auto w-72 rounded-full' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKYd9Ybdsn4nIQNF5hlL1me7oD83Rg4FQ_Vw&usqp=CAU" alt="" />
-                    <p className='text-center text-mono text-5xl mt-5 pixfont'>Richard Fox</p>
+                    {props.user && (<>
+                        <img className='mx-auto w-72 rounded-full' src={`http://localhost:2000/profile/${props.user.profileImg}`} alt="" />
+                        <p className='text-center text-mono text-5xl mt-5 pixfont'>{props.user.username}</p>
+                    </>
+                    )}
+
                 </div>
 
 
@@ -32,105 +64,52 @@ function Explore() {
                             </thead>
                             <tbody>
                                 {/* row 1 */}
-                                <tr>
-                                    <th>
+                                {props.assets.map && props.assets.map((asset) => {
+                                    return (
 
-                                    </th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img src="https://daisyui.com/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
+                                        <tr key={asset._id}>
+                                            <th>
+
+                                            </th>
+                                            <td>
+                                                <div className="flex items-center gap-3">
+                                                    <div className="avatar">
+                                                        <div className="mask mask-squircle w-12 h-12">
+                                                            <img src={`http://localhost:2000/asset/${asset.file}`} alt="Avatar Tailwind CSS Component" />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold">{asset.name}</div>
+                                                        
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">Hart Hagerty</div>
-                                                <div className="text-sm opacity-50">United States</div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                            </td>
 
-                                    <th>
-                                        <button className="btn btn-ghost btn-xs">details</button>
-                                    </th>
-                                </tr>
-                                {/* row 2 */}
-                                <tr>
-                                    <th>
+                                            <th>
+                                                <button className="btn btn-ghost btn-xs" onClick={()=>{
+                                                  det.current.showModal()
+                                                  processdata(asset)
+                                                  
+                                                }}
+                                                >details</button>
+                                            </th>
+                                           
+                                        </tr>
+                                    )
 
-                                    </th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img src="https://daisyui.com/tailwind-css-component-profile-3@56w.png" alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">Brice Swyre</div>
-                                                <div className="text-sm opacity-50">China</div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                })}
 
-                                    <th>
-                                        <button className="btn btn-ghost btn-xs">details</button>
-                                    </th>
-                                </tr>
-                                {/* row 3 */}
-                                <tr>
-                                    <th>
-
-                                    </th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img src="https://daisyui.com/tailwind-css-component-profile-4@56w.png" alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">Marjy Ferencz</div>
-                                                <div className="text-sm opacity-50">Russia</div>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <th>
-                                        <button className="btn btn-ghost btn-xs">details</button>
-                                    </th>
-                                </tr>
-                                {/* row 4 */}
-                                <tr>
-                                    <th>
-
-                                    </th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <img src="https://daisyui.com/tailwind-css-component-profile-5@56w.png" alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">Yancy Tear</div>
-                                                <div className="text-sm opacity-50">Brazil</div>
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <th>
-                                        <button className="btn btn-ghost btn-xs">details</button>
-                                    </th>
-                                </tr>
+                                
                             </tbody>
 
 
                         </table>
                     </div>
                 </div>
-
+              <Details asset={currasset} data={detdat}  ref={det}/>
+                
             </div>
+            
         </div>
     )
 }

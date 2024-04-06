@@ -1,10 +1,45 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Explore from './subpage/Explore'
 import "./profile.css"
 import Addasset from './subpage/Addasset'
+import axios from 'axios'
 function Profile() {
     const [sb , setSb] = useState("ma")
     const drawer = useRef(null)
+    const [user,setUser] = useState(null)
+    const [assets,setAssets] = useState([])
+    
+    
+    const checkStorage = ()=>{
+       const parse = JSON.parse(localStorage.getItem("user"))
+       setUser(parse)
+       allassetinfo(parse)
+       
+    }
+
+
+    const allassetinfo = async (userinfo)=>{
+        console.log("hello")
+        const response = await axios.post(`http://localhost:2000/userasset`,{
+            id: userinfo._id
+        },
+        {
+            headers: {
+                'Content-Type': 'application/json'  // Important for JSON data
+            }
+        }
+        )
+
+       setAssets(response.data.documents)           
+    }
+
+    useEffect(()=>{
+        checkStorage()  
+    },[])
+
+    useEffect(()=>{
+        console.log(user)
+    },[user])
     return (
         <div className='relative'>
 
@@ -37,8 +72,8 @@ function Profile() {
 
                         </label>
                         
-                        {sb=="aa" && (<Addasset/>)}
-                        {sb=="ma" && (<Explore />)}
+                        {sb=="aa" && (<Addasset user={user} setUser={setUser}/>)}
+                        {sb=="ma" && (<Explore user={user} assets={assets}  setUser={setUser}/>)}
                         {/* <Explore /> */}
                       
 

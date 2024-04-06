@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 function Header() {
 
     const [sbar, setSbar] = useState(true)
-
+   const [sear,setSear] = useState("")
     return (
         <div>
 
@@ -79,10 +79,10 @@ function Header() {
                             <li>
                                 <a className="justify-between">
                                     Profile
-                                    <span className="badge">New</span>
+                             
                                 </a>
                             </li>
-                            <li><a>Settings</a></li>
+                  
                             <li><a>Logout</a></li>
                         </ul>
                     </div>
@@ -90,14 +90,18 @@ function Header() {
                 <div className={`join z-40 ${sbar && "hidden"} w-full backdrop-blur`}>
                     <div className='w-full'>
                         <div className='w-full'>
-                            <input className="input input-bordered join-item w-full" placeholder="Search" />
+                            <input className="input input-bordered join-item w-full" value={sear}
+                            onChange={(e)=>{
+                                setSear(e.target.value)
+                            }}
+                            placeholder="Search" />
                         </div>
                     </div>
                     <select className="select select-bordered join-item">
-                        <option disabled selected>Filter</option>
-                        <option>Sci-fi</option>
-                        <option>Drama</option>
-                        <option>Action</option>
+                        
+                        <option selected>Art</option>
+                        <option>User</option>
+                        
                     </select>
                     <div className="indicator">
 

@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import "./signup.css"
 import axios from "axios"
 
@@ -9,11 +10,11 @@ function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [file, setFile] = useState(null)
-
-
+    const [error,seterror] = useState("")
+    const navigate = useNavigate();
     const formData = new FormData();
     formData.append('file', file);
-    
+
     const getBase64 = (fileoo) => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -25,18 +26,29 @@ function Signup() {
 
     const handleSubmit = async () => {
         const base64Data = await getBase64(file);
-        
-        const response = await axios.post("http://localhost:2000/signup",{
-            data:{
-                username:username,
-                password : password,
+
+        const response = await axios.post("http://localhost:2000/signup", {
+            data: {
+                email: email,
+                username: username,
+                password: password,
                 img: base64Data
             }
-        },{
+        }, {
             headers: {
                 'Content-Type': 'application/json'  // Important for JSON data
             }
         });
+        console.log(response.data)
+        if(response.data.status==1){
+         seterror(response.data.error)
+        }else{
+         const strdata = JSON.stringify(response.data)
+          localStorage.setItem("status",0)
+          localStorage.setItem("user",JSON.stringify(response.data.savedUser))
+          navigate("/")
+        };
+          
 
     }
 
@@ -75,7 +87,7 @@ function Signup() {
                             onClick={() => {
                                 modal.current.showModal()
                             }}
-                            className=" pixfont text-2xl btn btn-wide w-3/5 absolute bottom-0 left-1/2 transform -translate-y-1/2 -translate-x-1/2">Sign Up</button>
+                            className=" pixfont text-center px-auto text-2xl btn btn-wide w-3/5 absolute bottom-0 left-1/2 transform -translate-y-1/2 -translate-x-1/2">Sign Up</button>
                     </div>
 
 
@@ -83,10 +95,10 @@ function Signup() {
                         <div className="modal-box glass backdrop-blur" >
                             <h3 className="font-bold text-lg">Select A Profile Picure</h3>
                             {prof ? (<>
-                                <img src={prof} className='w-80 h-80 rounded-full mx-auto' alt="" />
+                                <img src={prof} className='w-72 h-72 rounded-full mx-auto' alt="" />
                             </>) : (
                                 <>
-                                    <div className='w-80 h-80 glass rounded-full mx-auto'></div>
+                                    <div className='w-72 h-72 glass rounded-full mx-auto'></div>
                                 </>)}
 
                             <div className="modal-action">
@@ -110,7 +122,20 @@ function Signup() {
 
                 </div>
             </div>
-
+            <div class={` absolute bottom-1 left-1/2 transform  -translate-x-1/2  ${error==""&&"hidden"}  max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700`} role="alert">
+                <div class="flex p-4">
+                    <div class="flex-shrink-0">
+                        <svg class="flex-shrink-0 size-4 text-red-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                        </svg>
+                    </div>
+                    <div class="ms-3">
+                        <p class="ml-3 text-sm w-48 text-gray-700 dark:text-gray-400">
+                            {error}
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
