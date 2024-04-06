@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import {initdb} from "./src/initdb.js";
 import { user } from "./db/user.js";
 import { asset } from "./db/art.js";
@@ -209,6 +209,14 @@ app.post("/buy",async (req,res)=>{
 const dellisted = await listedAsset.findOneAndDelete({assetid:req.body.assetid})
  
 res.status(200)
+
+})
+
+app.get("/find/:find",async (req,res)=>{
+const docs = await asset.find({ name: { $regex: req.params.find },listed:true })
+
+res.json(docs)
+
 
 })
 

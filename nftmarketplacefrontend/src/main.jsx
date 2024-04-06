@@ -5,9 +5,10 @@ import App from './App'
 
 
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('Root')
-)
+import { createRoot } from 'react-dom/client';
+const container = document.getElementById('Root');
+const root = createRoot(container); // createRoot(container!) if you use TypeScript
+root.render(<App />);
+
+
+

@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 function Header() {
 
     const [sbar, setSbar] = useState(true)
    const [sear,setSear] = useState("")
+   const navigate = useNavigate()
     return (
         <div>
 
@@ -105,7 +107,9 @@ function Header() {
                     </select>
                     <div className="indicator">
 
-                        <button className="btn join-item">Search</button>
+                        <button className="btn join-item" onClick={()=>{
+                            navigate(`/search/${sear}`)
+                        }}>Search</button>
                     </div>
                 </div>
 
